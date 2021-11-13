@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="jumbotron">
+   <div class="container">
+     <h1 class="display-4">News</h1>
+   </div>
+ </div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+<form action="{% url 'list' %}" method='POST'>{% csrf_token %}
+<p><input type="submit" value="取得する"></p>
+
+</form>
+<ul class="list-group list-group-flush">
+    <table border="2">
+      <tr>
+        <th>タレント</th>
+        <th>日付</th>
+        <th>時間</th>
+        <th>放送局</th>
+        <th>番組名</th>
+      </tr>
+      
+      
+      
+    </table>
+   </ul>
+</div>
+{% endblock content %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+{% endblock header %}
+
+{% block content %}
+
+<div class="container">
+<form action="{% url 'list' %}" method='POST'>{% csrf_token %}
+
+  <input type="date" name="enddate" value="{{tomorrow}}" min="{{today}}" max="{{maxday}}">までを<input type="submit" value="取得する" class="btn btn-primary">
+  <a href="{% url 'talent' %}" class="btn btn-primary m-2">登録タレントを追加</a>
+  <a href="{% url 'station' %}" class="btn btn-primary m-2">除外放送局を追加</a>
+    
+
+</form>
+<ul class="pagination justify-content-center">
+  {% if data.has_previous %}
+  <li class="page-item">
+      <a class="page-link" href="{% url 'list' %}">&laquo; first</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link" href="{% url 'list' %}{{data.previous_page_number}}">
+          &laquo; prev</a>
+  </li>
+  {% else %}
+  <li class="page-item">
+      <a class="page-link">&laquo; first</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link">&laquo; prev</a>
+  </li>
+  {% endif %}
+  <li class="page-item">
+      <a class="page-link">{{data.number}}/{{data.paginator.num_pages}}</a>
+  </li>
+  {% if data.has_next %}
+  <li class="page-item">
+      <a class="page-link" href="{% url 'list' %}{{data.next_page_number}}">
+          next &raquo;</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link" href="{% url 'list' %}{{data.paginator.num_pages}}">
+          last &raquo;</a>
+  </li>
+  {% else %}
+  <li class="page-item">
+      <a class="page-link">next &raquo;</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link">last &raquo;</a>
+  </li>
+  {% endif %}
+</ul>
+<ul class="list-group list-group-flush">
+ <table class="table table-hover table-bordered table-sm">
+  <thead class="thead-light text-center">
+   <tr>
+     <th>タレント</th>
+     <th>日付</th>
+     <th>時間</th>
+     <th>放送局</th>
+     <th>番組名</th>
+   </tr>
+  </thead>
+  <tbody>
+   {% for item in data %}
+   <tr>
+     <td><a href="{{ item.url }}" target="_blank">{{ item.talent }}</a></td>
+     
+     <td>{{ item.date|date:"y-m-d" }}</td>
+     
+     <td>{{ item.time }}</td>
+     <td>{{ item.station }}</td>
+     <td class="small">{{ item.program_name}}</td>
+     <!-- <td><a href="{{ post2 }}">{{ post2 }}</a></td> -->
+   </tr>
+   {% endfor %}
+  </tbody>
+ </table>
+</ul>
+</div>
+{% endblock content %}

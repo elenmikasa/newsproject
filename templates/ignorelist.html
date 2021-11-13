@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<br>
+<div class="container ">
+
+
+  {% if ret %}
+    <p>除外放送局を追加しました</p>
+  {% endif %}
+    <table class="table w-50" >
+      <thead class="thead-light">
+      <tr>
+        
+        <th>除外放送局</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in data %} 
+      <tr>
+          
+          <td>{{item.station}}</td>
+      </tr>
+    {% endfor %}
+      
+      
+    </tbody> 
+    </table>
+
+</div>
+{% endblock content %}

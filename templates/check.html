@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class="container mt-3">
+
+<form action="{% url 'talentcreate' %}" method="post">
+    <p>※以下のレコードを追加してよろしいですか？ 
+    <input type="submit" value="はい" class="btn btn-primary">
+    <a href="{% url 'talent' %}" class="btn btn-primary">戻る</a></p>
+    {% csrf_token %}
+    
+        {% for field in form %}
+        {{field.as_hidden}}
+    {% endfor %}
+</form>
+
+
+  <table class="table w-50">
+    <thead class="thead-light">
+    <tr>
+      <th>url</th>
+      <th>talent</th>
+      
+    </tr>
+    </thead>
+    
+    <tr>
+        <td>{{form.url.value}}</td>
+        <td>{{form.talent.value}}</td>
+        
+    </tr>
+    
+  
+  </table>
+  
+</div>
+{% endblock content %}

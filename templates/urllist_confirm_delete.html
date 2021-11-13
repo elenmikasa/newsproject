@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>※以下のレコードを削除してよろしいですか？
+            <input type="submit" value="はい" class="btn btn-primary">
+            <a href="{{request.META.HTTP_REFERER}}"  class="btn btn-primary">戻る</a></p>
+    </form>
+    <table class="table w-50">
+      <thead class="thead-light">
+      <tr>
+        <th>url</th>
+        <th>talent</th>
+        
+      </tr>
+    </thead>
+      <tr>
+          <td>{{object.url}}</td>
+          <td>{{object.talent}}</td>
+          
+      </tr>
+    
+    </table>
+</div>
+{% endblock content %}

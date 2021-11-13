@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+{% if messages %}
+	<ul class="messages_ul list-unstyled mt-3">
+		{% for message in messages %}
+			<li class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+<ul class="pagination justify-content-left ml-3 mt-3">
+  {% if page_obj.has_previous %}
+  <li class="page-item">
+      <a class="page-link" href="{% url 'member' %}">&laquo; first</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.previous_page_number}}">
+          &laquo; prev</a>
+  </li>
+  {% else %}
+  <li class="page-item">
+      <a class="page-link">&laquo; first</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link">&laquo; prev</a>
+  </li>
+  {% endif %}
+  <li class="page-item">
+      <a class="page-link">{{page_obj.number}}/{{page_obj.paginator.num_pages}}</a>
+  </li>
+  {% if page_obj.has_next %}
+  <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+          next &raquo;</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.paginator.num_pages}}">
+          last &raquo;</a>
+  </li>
+  {% else %}
+  <li class="page-item">
+      <a class="page-link">next &raquo;</a>
+  </li>
+  <li class="page-item">
+      <a class="page-link">last &raquo;</a>
+  </li>
+  {% endif %}
+</ul>
+<div class="container">
+    <table class="table table-striped w-50 small">
+      <tr>
+        <th>url</th>
+        <th>talent</th>
+        <th></th>
+      </tr>
+      {% for member in object_list %}
+      <tr>
+          <td><a href="{{ member.url }}" target="_blank">{{member.url}}</a></td>
+          <td>{{member.talent}}</td>
+          <td><a href="{% url 'delete' member.pk %}">Delete</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+
+</div>
+{% endblock content %}

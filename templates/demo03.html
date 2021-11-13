@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock header %}
+{% block content %}
+<div class="container">
+
+{% if ret %}  
+<form action="{% url 'ignorelist' %}" method="post">{% csrf_token %}
+{% else %}
+<form action="" method="post">{% csrf_token %}
+{% endif %}
+    
+    <table class="table">
+        {% if ret %}
+        	{% for key,val in results.items %}
+				<tr><td>以下の放送局を除外放送局へ追加しますか？
+                    <button type="submit" class="btn btn-primary">はい</button>
+                    <a href="{% url 'station' %}" class="btn btn-primary">戻る</a>
+                </td></tr>
+                    
+                    <tr></tr><td><ul>
+                    {% for v in val %}
+                        <li>{{ v }}</li>
+                        <input type="hidden" name="ans3" value="{{ v }}">
+                    {% endfor %}
+                    </td></ul></tr>
+            {% endfor %}
+
+            
+    			
+           	        
+        {% else %}
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary">チェックした値を除外放送局へ追加</button>
+                </td>
+            </tr>     
+        	{% for key,val in errors.items %}
+				<tr>
+        			<td>{{ key }} : {{ val }}</td>
+				</tr>
+        	{% endfor %}
+        	{% for field in form %}
+        				
+                {% if field.field.widget.input_type == "checkbox" %}
+                    <tr>
+                        
+                        <td><ul>
+                            {% for c in field %}
+                                <li>{{ c }}</li>
+                            {% endfor %}
+                        </ul></td>
+                    </tr>
+                {% endif %}
+			{% endfor %}
+		
+         {% endif %}
+        </table>
+     </form>
+</div>
+{% endblock content %}
